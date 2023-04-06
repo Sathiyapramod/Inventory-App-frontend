@@ -1,0 +1,19 @@
+.sidebar-logo{
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+.sidebar-menu,.sidebar-submenu{
+    font-size: 1.2rem;
+    font-weight:100;
+}
+.sidebar-menu-items{
+    text-align: start;
+}
+.sidebar-menu-items:hover{
+    color: grey;
+    cursor: pointer;
+}
+.sidebar-submenu-items:hover{
+    color: grey;
+    cursor: pointer;
+}

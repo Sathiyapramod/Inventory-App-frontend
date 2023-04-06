@@ -1,0 +1,12 @@
+{
+  "name": "",
+  "units": "",
+  "totalQty": 250,
+  "rate": 250 ,
+  "data": {
+    "username": "sathiya",
+    "email": "sathiyapramod22@gmail.com",
+    "password": "123456",
+    "jobRole": "admin"
+  }
+}
