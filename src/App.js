@@ -147,7 +147,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/payment" element={<Payment />} />
+              <Route
+                path="/payment"
+                element={
+                  <ProtectedRoute>
+                    <Payment />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </div>
         </div>

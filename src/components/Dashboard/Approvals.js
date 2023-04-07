@@ -85,6 +85,7 @@ function Approvals() {
           nextApprover={nextApprover}
           setNextApprover={setNextApprover}
           allUsers={allUsers}
+          getWorkflows={getWorkflows}
         />
       </div>
     </div>
@@ -96,6 +97,7 @@ function SendforNextApproval({
   nextApprover,
   allUsers,
   purchaseOrder,
+  getWorkflows,
 }) {
   async function SendforApproval() {
     let latestApproval;
@@ -115,9 +117,9 @@ function SendforNextApproval({
       purchaseOrder.isAuthorized !== 0 &&
       purchaseOrder.isScrutinized !== 0 &&
       purchaseOrder.isApproved == 0
-    ) 
-    latestApproval = { ...purchaseOrder, isApproved: 1 };
-      console.log(latestApproval);
+    )
+      latestApproval = { ...purchaseOrder, isApproved: 1 };
+    console.log(latestApproval);
 
     let id = allUsers.find((user) => {
       return user.empName === nextApprover.toLowerCase();
@@ -153,6 +155,7 @@ function SendforNextApproval({
       const response = await data1.json();
       console.log(response);
       alert("removed from sender's wf also ");
+      getWorkflows();
     }
   }
   return (

@@ -10,12 +10,10 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Pie,
-  PieChart,
 } from "recharts";
 
 function Dashboard() {
-  // console.log(userData.find((user)=>{return user.empName == localStorage.getItem("currentUser")}).workflow.length);
+  let roleID = localStorage.getItem("cadreID");
 
   const navigate = useNavigate();
   const [workflow, setworkflows] = useState([]);
@@ -26,6 +24,22 @@ function Dashboard() {
   const [bookedValue, setBooked] = useState(0);
   const [billedCustomers, setBilledcustomers] = useState([]);
   const [customers, setcustomers] = useState([]);
+
+  const getBillData = () => {
+    fetch(`${backendAPI}/billabstract`)
+      .then((response) => response.json())
+      .then((result) => {
+        setBilledcustomers(result);
+      });
+  };
+
+  const getCustomers = () => {
+    fetch(`${backendAPI}/customers`)
+      .then((response) => response.json())
+      .then((result) => {
+        setcustomers(result);
+      });
+  };
   const getInventory = () => {
     fetch(`${backendAPI}/inventory`)
       .then((response) => response.json())
@@ -50,33 +64,22 @@ function Dashboard() {
       });
   };
 
-  const getBillData = () => {
-    fetch(`${backendAPI}/billabstract`)
-      .then((response) => response.json())
-      .then((result) => {
-        setBilledcustomers(result);
-      });
-  };
-
-  const getCustomers = () => {
-    fetch(`${backendAPI}/customers`)
-      .then((response) => response.json())
-      .then((result) => {
-        setcustomers(result);
-      });
-  };
-
-  const getWorkflow = () => {
-    fetch(`${backendAPI}/workflow`)
-      .then((response) => response.json())
-      .then((result) => setworkflows(result));
-  };
   useEffect(() => {
     getInventory();
     getBillData();
-    getWorkflow();
     getCustomers();
-  }, [inventory]);
+    fetch(`${backendAPI}/workflow`)
+      .then((response) => response.json())
+      .then((result) => {
+        setworkflows(
+          result.filter((user) => {
+            return user.empName == localStorage.getItem("currentUser");
+          })[0].workflow.length
+        );
+      });
+  }, [workflow]);
+
+  // console.log(workflow);
   return (
     <div>
       <div className="d-flex flex-row justify-content-between align-items-center p-3">
@@ -134,42 +137,53 @@ function Dashboard() {
         <div className="bg-light p-3">
           <span className="fs-4 pt-2 pb-2 fw-bolder">Inventory Data</span>
           {inventory && (
-            <PieChart width={500} height={500}>
-              <Pie
-                dataKey="totalQty"
-                data={inventory}
-                nameKey="name"
-                outerRadius={80}
-                innerRadius={60}
-                cx="50%"
-                cy="50%"
-                fill="#FFBB28"
-                label
-              />
+            <BarChart
+              width={500}
+              height={300}
+              data={inventory}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
               <Legend />
-              <Tooltip title />
-            </PieChart>
+              <Bar dataKey="billedQty" stackId="a" fill="#8884d8" />
+              <Bar dataKey="availableQty" stackId="a" fill="#82ca9d" />
+            </BarChart>
           )}
         </div>
       </div>
       <div className="d-flex flex-row justify-content-center align-items-center">
-        <div className="card bg-light p-3" style={{ width: "25%" }}>
-          <span className="pt-2 fs-5">Pending Approvals</span>
-          <div className="card-body fs-1">
-            {workflow.length != 0 &&
-              workflow.find((user) => {
-                return user.empName == localStorage.getItem("currentUser");
-              }).workflow.length}
+        {roleID !== 1 && (
+          <div className="card bg-light p-3" style={{ width: "25%" }}>
+            <span className="pt-2 fs-5">Pending Approvals</span>
+            <div className="card-body fs-1">
+              {roleID == 1 ? (
+                <span>Access Disabled</span>
+              ) : (
+                <span>{workflow}</span>
+              )}
+            </div>
+            <span>
+              {roleID == 1 ? (
+                <></>
+              ) : (
+                <button
+                  className="btn btn-outline-dark"
+                  onClick={() => navigate("/dashboard/approvals")}
+                >
+                  View
+                </button>
+              )}
+            </span>
           </div>
-          <span>
-            <button
-              className="btn btn-outline-dark"
-              onClick={() => navigate("/dashboard/approvals")}
-            >
-              View
-            </button>
-          </span>
-        </div>
+        )}
         <div style={{ width: "75%" }}>
           <table className="table table-striped table-hover">
             <thead>

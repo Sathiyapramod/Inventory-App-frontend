@@ -4,7 +4,19 @@ import { backendAPI } from "../General";
 
 function Payment() {
   const [customers, setCustomers] = useState([]);
-  const [status, setStatus] = useState(false);
+
+  const updatePaymentStatus = (element) => {
+    fetch(`${backendAPI}/billing/${element._id}`, {
+      method: "PUT",
+      body: JSON.stringify(element),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => alert("Payment Updation success !!!!"));
+  };
+
   useEffect(() => {
     fetch(`${backendAPI}/billing`)
       .then((response) => response.json())
@@ -40,6 +52,9 @@ function Payment() {
               ].map((heading, index) => {
                 return <th key={index}>{heading}</th>;
               })}
+              {localStorage.getItem("jobRole") === "accounts" && (
+                <th>Edit Status</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -54,8 +69,11 @@ function Payment() {
                   <td>{element.billMode}</td>
                   <td>{element.billMode == "Cash" ? "Paid" : "Pending"}</td>
                   <td>
-                    {localStorage.getItem("jobRole") == "accounts" && (
-                      <span><Counter status={status} setStatus={setStatus} /></span>
+                    {localStorage.getItem("jobRole") === "accounts" && (
+                      <Counter
+                        updatePaymentStatus={updatePaymentStatus}
+                        item={element}
+                      />
                     )}
                   </td>
                 </tr>
@@ -68,9 +86,19 @@ function Payment() {
   );
 }
 
-function Counter(){
+function Counter({ updatePaymentStatus, item }) {
+  // console.log(item);
+  const [status, setStatus] = useState(false);
   return (
-    <button>{}</button>
-  )
+    <button
+      className={status === true ? "btn btn-success" : "btn btn-danger"}
+      onClick={() => {
+        setStatus(true);
+        updatePaymentStatus(item);
+      }}
+    >
+      {status == true ? "Paid" : "Pending"}
+    </button>
+  );
 }
 export default Payment;

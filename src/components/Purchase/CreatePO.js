@@ -18,7 +18,8 @@ function CreatePO() {
   const [date, setDate] = useState("");
   const [grossTotal, setGrossTotal] = useState(0);
   const [gst, setTax] = useState(0);
-  const [NetTotal, setNetTotal] = useState(0);
+  const [NetAmount, setNetTotal] = useState(0);
+  const [approver, setApprover] = useState("");
 
   const AddItemToPO = () => {
     let total = Number(rate) * Number(quantity) * 0.01 * Number(itemGST);
@@ -44,11 +45,49 @@ function CreatePO() {
       date: new Date(date),
       grossTotal,
       gst,
-      NetTotal,
+      NetAmount,
     };
     console.log(newOrder);
   };
+  const newPurchaseOrder = () => {
+    const newPO = {
+      vendorName,
+      grossTotal,
+      gst,
+      NetAmount,
+      POItems: itemList,
+      date: new Date(date),
+      isAuthorized: 0,
+      isScrutinized: 0,
+      isApproved: 0,
+    };
+    console.log(newPO);
+    console.log(approver);
+    let id = workflow.find((user) => {
+      return user.empName == approver.toLowerCase();
+    })._id;
+    console.log(id);
 
+    console.log(newPO);
+    fetch(`${backendAPI}/workflow/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(newPO),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => alert("Purchase Order Approval Sent to Approver"));
+    fetch(`${backendAPI}/purchase`, {
+      method: "POST",
+      body: JSON.stringify(newPO),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => alert("PO database Updated Successfully !!!"));
+  };
   const getWorkflow = () => {
     fetch(`${backendAPI}/workflow`)
       .then((response) => response.json())
@@ -68,7 +107,7 @@ function CreatePO() {
     setTax(Math.ceil(gstAmount));
     setNetTotal(Math.ceil(total + gstAmount));
     getWorkflow();
-  }, [grossTotal, gst, NetTotal, itemList, workflow]);
+  }, [grossTotal, gst, NetAmount, itemList, workflow]);
 
   return (
     <div>
@@ -199,7 +238,11 @@ function CreatePO() {
             >
               Create PO
             </button>
-            <SendforApproval workflow={workflow} />
+            <SendforApproval
+              workflow={workflow}
+              newPurchaseOrder={newPurchaseOrder}
+              setApprover={setApprover}
+            />
           </div>
           <div className="position-absolute bottom-0 end-0 pb-5 pe-3">
             <div className="d-flex flex-column justify-content-center align-items-end">
@@ -215,7 +258,9 @@ function CreatePO() {
               </span>
               <span className="d-flex flex-row gap-2 justify-content-center">
                 <label className="form-label fs-5">Total Amount</label>
-                <span className="fs-4">{NetTotal.toLocaleString("hi-IN")}</span>
+                <span className="fs-4">
+                  {NetAmount.toLocaleString("hi-IN")}
+                </span>
               </span>
             </div>
           </div>
@@ -358,7 +403,7 @@ function AddItem({
   );
 }
 
-function SendforApproval({ workflow }) {
+function SendforApproval({ workflow, newPurchaseOrder, setApprover }) {
   return (
     <div
       className="modal fade"
@@ -386,7 +431,14 @@ function SendforApproval({ workflow }) {
             <div className="d-flex flex-row justify-content-center align-items-center gap-3">
               <div className="col-5">
                 <div className="form-floating">
-                  <select className="form-select" id="floatingSelectGrid">
+                  <select
+                    className="form-select"
+                    id="floatingSelectGrid"
+                    onChange={(event) => {
+                      setApprover(event.target.value);
+                    }}
+                  >
+                    <option defaultChecked="SelectOne">--Select One --</option>
                     {workflow.length != 0 &&
                       workflow
                         .filter((user) => {
@@ -424,7 +476,13 @@ function SendforApproval({ workflow }) {
             >
               Close
             </button>
-            <button type="button" className="btn btn-primary">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                newPurchaseOrder();
+              }}
+            >
               Understood
             </button>
           </div>
