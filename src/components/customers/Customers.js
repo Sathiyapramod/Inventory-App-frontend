@@ -26,18 +26,17 @@ function Customers() {
       contactNo,
     };
     const data = await fetch(`${backendAPI}/customers`, {
-        method:"POST",
-        body:JSON.stringify(newCustomer),
-        headers:{
-            "content-type":"application/json"
-        }
+      method: "POST",
+      body: JSON.stringify(newCustomer),
+      headers: {
+        "content-type": "application/json",
+      },
     });
-    if(data.status === 401)
-        console.log("error")
+    if (data.status === 401) console.log("error");
     else {
-        const result = await data.json();
-        alert("new Customer Added Successfully");
-        getCustomerData();
+      const result = await data.json();
+      alert("new Customer Added Successfully");
+      getCustomerData();
     }
   }
 
@@ -187,13 +186,6 @@ function CreateCustomer({
             </div>
           </div>
           <div className="modal-footer">
-            {/* <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button> */}
             <button
               type="button"
               className="btn btn-primary"
@@ -225,11 +217,11 @@ function ViewCustomer({ customerData }) {
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-dialog modal-dialog-centered modal-lg">
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Modal title
+                  Customer Details - {customerData.customerName}
                 </h1>
                 <button
                   type="button"
@@ -239,51 +231,58 @@ function ViewCustomer({ customerData }) {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="d-flex flex-row justify-content-center align-items-center">
-                  <label className="form-label">Customer Name</label>
-                  <span className="col-5">
+                <div className="d-flex flex-row justify-content-between align-items-center gap-4 ps-2 pe-2">
+                  <span className="col-5 form-floating">
                     <input
                       type="text"
+                      id="floatingLabel"
                       className="form-control me-2"
                       defaultValue={customerData.customerName}
-                      disabled
                     />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Customer Name
+                    </label>
+                  </span>
+                  <span className="col-5 form-floating">
+                    <input
+                      type="text"
+                      id="floatingLabel"
+                      className="form-control me-2"
+                      defaultValue={customerData.gstNumber}
+                    />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      GST Number
+                    </label>
                   </span>
                 </div>
-                <div className="d-flex flex-row justify-content-center align-items-center">
-                  <label className="form-label">Address</label>
-                  <span className="col-5">
+                <br />
+                <div className="d-flex flex-row justify-content-between align-items-center ps-2">
+                  <span className="col-5 form-floating">
                     <textarea
                       type="text"
                       className="form-control me-2"
                       rows={3}
                       defaultValue={customerData.address}
-                      disabled
+                      id="floatingLabel"
                     />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Address
+                    </label>
                   </span>
-                </div>
-                <div className="d-flex flex-row justify-content-center align-items-center">
-                  <label className="form-label">GST Number</label>
-                  <span className="col-5">
-                    <input
-                      type="text"
-                      className="form-control me-2"
-                      defaultValue={customerData.gstNumber}
-                      disabled
-                    />
-                  </span>
-                </div>
-                <div className="d-flex flex-row justify-content-center align-items-center">
-                  <label className="form-label">Contact Info</label>
-                  <span className="col-5">
+
+                  <span className="col-5 form-floating">
                     <input
                       type="text"
                       className="form-control me-2"
                       defaultValue={customerData.contactNo}
-                      disabled
+                      id="floatingLabel"
                     />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Contact Info
+                    </label>
                   </span>
                 </div>
+                <div className="d-flex flex-row justify-content-center align-items-center"></div>
               </div>
               <div className="modal-footer">
                 <button
@@ -292,9 +291,6 @@ function ViewCustomer({ customerData }) {
                   data-bs-dismiss="modal"
                 >
                   Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Understood
                 </button>
               </div>
             </div>

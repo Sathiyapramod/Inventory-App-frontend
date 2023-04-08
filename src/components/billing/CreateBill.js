@@ -153,12 +153,11 @@ function CreateBill() {
 function AddBill(props) {
   return (
     <div className="form">
-      <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-        <label className="form-label">Customer Name</label>
-        <div className="col-3">
+      <div className="d-flex flex-row justify-content-between align-items-center gap-2">
+        <div className="col-5 form-floating">
           <select
             className="form-select"
-            id="floatingSelect"
+            id="floatingSelectGrid"
             onChange={(event) => {
               props.setCustomerName(event.target.value);
             }}
@@ -172,11 +171,9 @@ function AddBill(props) {
               );
             })}
           </select>
+          <label htmlFor="floatingSelectGrid">Customer Name</label>
         </div>
-      </div>
-      <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-        <label className="form-label">Billing Mode</label>
-        <div className="col-3">
+        <div className="col-5 form-floating">
           <select
             className="form-select"
             id="floatingSelect"
@@ -188,16 +185,19 @@ function AddBill(props) {
             <option defaultValue="Cash">Cash</option>
             <option defaultValue="Credit">Credit</option>
           </select>
+          <label className="form-label" htmlFor="floatingSelect">
+            Billing Mode
+          </label>
         </div>
-        <br />
       </div>
+      <br />
       <div>
         {props.billMode === "Credit" && (
-          <div className="d-flex flex-row justify-content-center align-items-center">
-            <label>Credit Period</label>
-            <div>
+          <div className="col-5">
+            <div className="form-floating">
               <select
                 className="form-select"
+                id="floatingSelect"
                 onChange={(event) => {
                   props.setCreditPeriod(event.target.value);
                   console.log(event.target.value);
@@ -207,12 +207,16 @@ function AddBill(props) {
                 <option defaultValue="45 days">45 days</option>
                 <option defaultValue="60 days">60 days</option>
               </select>
+              <label className="form-label" htmlFor="floatingSelect">
+                Billing Mode
+              </label>
             </div>
             <br />
           </div>
         )}
       </div>
-      <div className="d-flex flex-row justify-content-center align-items-center">
+      <br />
+      <span className="col-5">
         <DatePicker
           selected={props.date}
           onChange={(date) => {
@@ -221,8 +225,10 @@ function AddBill(props) {
           dateFormat="dd-MMM-yyyy"
           maxDate={addDays(new Date(), 1)}
           minDate={addDays(new Date(), -1)}
+          className="form-content me-2 pt-2 pb-2 rounded"
+          id="floatingDateSelect"
         />
-      </div>
+      </span>
       <hr />
       <div>
         <div className="container">
@@ -283,7 +289,7 @@ function AddItem(props) {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
@@ -298,8 +304,7 @@ function AddItem(props) {
             </div>
             <div className="modal-body">
               <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Item Name</label>
-                <div className="col-5">
+                <div className="col-8 form-floating">
                   <select
                     className="form-select"
                     id="floatingSelect"
@@ -320,24 +325,31 @@ function AddItem(props) {
                       );
                     })}
                   </select>
+                  <label className="form-label" htmlFor="floatingSelect">
+                    Item Name
+                  </label>
                 </div>
               </div>
+              <br />
               <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Units</label>
-                <div className="col-5">
+                <div className="col-8 form-floating">
                   <input
                     type="text"
-                    className="form-control me-2"
+                    className="form-control"
+                    id="floatingLabel"
                     defaultValue={props.units.units}
-                    disabled
                   />
+                  <label className="form-label" htmlFor="floatingLabel">
+                    Units
+                  </label>
                 </div>
               </div>
+              <br />
               <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Quantity</label>
-                <div className="col-5">
+                <div className="col-8 form-floating">
                   <input
                     className="form-control me-2"
+                    id="floatingLabel"
                     type="number"
                     min={props.units.minQuant}
                     step={5}
@@ -346,6 +358,9 @@ function AddItem(props) {
                       props.setQty(event.target.value);
                     }}
                   />
+                  <label className="form-label" htmlFor="floatingLabel">
+                    Quantity
+                  </label>
                 </div>
               </div>
             </div>
