@@ -23,7 +23,7 @@ function StockTransfer() {
     const data = { newStock };
     const id = updationItem._id;
     // console.log(data);
-    fetch(`${backendAPI}/stock/${id}`, {
+    fetch(`${backendAPI}/users/stock/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {

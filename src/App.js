@@ -32,7 +32,7 @@ function App() {
       username,
       password,
     };
-    const data = await fetch(`${backendAPI}/signin`, {
+    const data = await fetch(`${backendAPI}/users/signin`, {
       method: "POST",
       body: JSON.stringify(signin),
       headers: {
