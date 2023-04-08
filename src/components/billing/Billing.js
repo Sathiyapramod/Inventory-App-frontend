@@ -26,9 +26,9 @@ function Billing() {
       });
   };
   useEffect(() => {
-    // fetch(`${backendAPI}/billing`)
-    //   .then((response) => response.json())
-    //   .then((result) => setBills(result));
+    fetch(`${backendAPI}/billing`)
+      .then((response) => response.json())
+      .then((result) => setBills(result));
   }, []);
   return (
     <div>
