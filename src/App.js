@@ -14,6 +14,7 @@ import CreatePO from "./components/Purchase/CreatePO";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import CreateBill from "./components/billing/CreateBill";
 import Approvals from "./components/Dashboard/Approvals";
+import StockTransfer from "./components/Transfer/StockTransfer";
 
 const Name = createContext();
 
@@ -155,6 +156,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/transfer" element={<ProtectedRoute><StockTransfer /></ProtectedRoute>} />
             </Routes>
           </div>
         </div>
