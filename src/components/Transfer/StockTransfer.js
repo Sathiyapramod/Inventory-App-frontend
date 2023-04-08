@@ -7,7 +7,11 @@ function StockTransfer() {
   const [updationItem, setUpdationItem] = useState({});
   const [newStock, setNewStock] = useState(0);
   const getInventory = () => {
-    fetch(`${backendAPI}/inventory`)
+    fetch(`${backendAPI}/inventory`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    })
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

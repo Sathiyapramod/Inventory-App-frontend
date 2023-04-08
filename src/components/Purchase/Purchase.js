@@ -8,7 +8,11 @@ function Purchase() {
   const [orders, setOrders] = useState([]);
   const [orderItems, setItem] = useState({});
   const getOrders = () => {
-    fetch(`${backendAPI}/purchase`)
+    fetch(`${backendAPI}/purchase`,{
+      headers:{
+        "x-auth-token":localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => setOrders(result));
   };

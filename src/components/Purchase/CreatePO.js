@@ -74,11 +74,12 @@ function CreatePO() {
       body: JSON.stringify(newPO),
       headers: {
         "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("token")
       },
     })
       .then((response) => response.json())
       .then(() => alert("Purchase Order Approval Sent to Approver"));
-    fetch(`${backendAPI}/purchase`, {
+    fetch(``, {
       method: "POST",
       body: JSON.stringify(newPO),
       headers: {
@@ -89,7 +90,11 @@ function CreatePO() {
       .then(() => alert("PO database Updated Successfully !!!"));
   };
   const getWorkflow = () => {
-    fetch(`${backendAPI}/workflow`)
+    fetch(`${backendAPI}/workflow`,{
+      headers:{
+        "x-auth-token": localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => setworkflows(result));
   };

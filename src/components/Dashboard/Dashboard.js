@@ -35,14 +35,22 @@ function Dashboard() {
   };
 
   const getCustomers = () => {
-    fetch(`${backendAPI}/customers`)
+    fetch(`${backendAPI}/customers`,{
+      headers:{
+        "x-auth-token": localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => {
         setcustomers(result);
       });
   };
   const getInventory = () => {
-    fetch(`${backendAPI}/inventory`)
+    fetch(`${backendAPI}/inventory`,{
+      headers:{
+        "x-auth-token":localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => {
         setInventory(result);
@@ -69,7 +77,11 @@ function Dashboard() {
     getInventory();
     getBillData();
     getCustomers();
-    fetch(`${backendAPI}/workflow`)
+    fetch(`${backendAPI}/workflow`,{
+      headers:{
+        "x-auth-token": localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => {
         setworkflows(

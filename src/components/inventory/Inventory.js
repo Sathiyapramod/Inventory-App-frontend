@@ -11,7 +11,11 @@ function Inventory() {
   const [rate, setRate] = useState(10);
 
   async function getInventory() {
-    const data = await fetch(`${backendAPI}/inventory`);
+    const data = await fetch(`${backendAPI}/inventory`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    });
     if (data.status === 401) {
       console.log("error");
     } else {
@@ -32,6 +36,7 @@ function Inventory() {
       body: JSON.stringify(newInventory),
       headers: {
         "content-type": "application/json",
+        "x-auth-token":localStorage.getItem('token')
       },
     });
     if (data.status === 401) {
@@ -46,6 +51,9 @@ function Inventory() {
   async function DeleteItem(identity) {
     fetch(`${backendAPI}/inventory/${identity}`, {
       method: "DELETE",
+      headers:{
+        "x-auth-token":localStorage.getItem('token')
+      }
     })
       .then((response) => response.json())
       .then(() => {
@@ -68,6 +76,7 @@ function Inventory() {
       body: JSON.stringify(updatedItem),
       headers: {
         "content-type": "application/json",
+        "x-auth-token":localStorage.getItem('token')
       },
     });
     if (data.status === 401) {

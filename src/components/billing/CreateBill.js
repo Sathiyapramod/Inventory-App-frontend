@@ -41,10 +41,18 @@ function CreateBill() {
   };
 
   useEffect(() => {
-    fetch(`${backendAPI}/inventory`)
+    fetch(`${backendAPI}/inventory`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    })
       .then((response) => response.json())
       .then((result) => setInventory(result));
-    fetch(`${backendAPI}/customers`)
+    fetch(`${backendAPI}/customers`,{
+      headers:{
+        "x-auth-token":localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => setCustomers(result));
     let total = 0;
@@ -70,6 +78,7 @@ function CreateBill() {
       body: JSON.stringify(newBill),
       headers: {
         "content-type": "application/json",
+        "x-auth-token": localStorage.getItem("token"),
       },
     });
     if (data.status === 401) {

@@ -9,7 +9,11 @@ function Approvals() {
   const [purchaseOrder, setpurchaseOrder] = useState({});
   const [nextApprover, setNextApprover] = useState("");
   const getWorkflows = () => {
-    fetch(`${backendAPI}/workflow`)
+    fetch(`${backendAPI}/workflow`,{
+      headers:{
+        "x-auth-token":localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => {
         setAllUsers(result);
@@ -131,6 +135,7 @@ function SendforNextApproval({
       body: JSON.stringify(latestApproval),
       headers: {
         "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("token")
       },
     });
     if (data.status == 401) console.log("error");
@@ -148,6 +153,7 @@ function SendforNextApproval({
       body: JSON.stringify(latestApproval),
       headers: {
         "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("token")
       },
     });
     if (data1.status == 401) console.log("error");

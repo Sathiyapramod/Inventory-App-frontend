@@ -11,6 +11,7 @@ function Payment() {
       body: JSON.stringify(element),
       headers: {
         "Content-Type": "application/json",
+        "x-auth-token":localStorage.getItem('token')
       },
     })
       .then((response) => response.json())
@@ -18,7 +19,11 @@ function Payment() {
   };
 
   useEffect(() => {
-    fetch(`${backendAPI}/billing`)
+    fetch(`${backendAPI}/billing`,{
+      headers:{
+        "x-auth-token":localStorage.getItem("token")
+      }
+    })
       .then((response) => response.json())
       .then((result) => setCustomers(result));
   }, []);
