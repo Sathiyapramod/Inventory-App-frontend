@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { backendAPI } from "../General";
 import { useNavigate } from "react-router-dom";
 import ReceiptIcon from "@mui/icons-material/Receipt";
+import CorporateFareRoundedIcon from "@mui/icons-material/CorporateFareRounded";
 import {
   BarChart,
   Bar,
@@ -83,40 +84,97 @@ function Dashboard() {
   return (
     <div>
       <div className="d-flex flex-row justify-content-between align-items-center p-3">
-        <span className="fs-4">
-          <ReceiptIcon /> Dashboard
+        <span>
+          <span className="fs-3">
+            <ReceiptIcon /> Dashboard
+          </span>
+          <span className="breadcrumb text-black-50">Dashboard</span>
+        </span>
+        <br />
+        <span>
+          {roleID !== 1 && (
+            <div className="card">
+              <span className="fs-5 card-header">Pending Approvals</span>
+              <div className="card-body fs-2">
+                {roleID == 1 ? (
+                  <span>Access Disabled</span>
+                ) : (
+                  <span>{workflow}</span>
+                )}
+                <span>
+                  {" "}
+                  {roleID == 1 ? (
+                    <></>
+                  ) : (
+                    <button
+                      className="btn"
+                      onClick={() => navigate("/dashboard/approvals")}
+                    >
+                      View
+                    </button>
+                  )}
+                </span>
+              </div>
+            </div>
+          )}
         </span>
       </div>
-      <div className="d-flex flex-row justify-content-center align-items-center gap-5">
-        <div className="card bg-light" style={{ width: "18rem" }}>
-          <span className="pt-2 fs-5">Total Units</span>
-          <div className="card-body fs-1">{totalQuantity}</div>
-        </div>
-        <div className="card" style={{ width: "18rem" }}>
-          <span className="pt-2 fs-5">Current Stock(Units)</span>
-          <div className="card-body fs-1">{currentStock}</div>
-        </div>
-        <div className="card bg-light" style={{ width: "18rem" }}>
-          <span className="pt-2 fs-5">Stock Current Value</span>
-          <div className="card-body fs-1">
-            {currentStockvalue.toLocaleString("hi-IN")}
+      <hr />
+      <div className="d-flex flex-row justify-content-center align-items-center gap-5 mx-auto flex-wrap">
+        <div className="card bg-warning-subtle" style={{ width: "18rem" }}>
+          <div className="d-flex flex-row-reverse justify-content-center align-items-center">
+            <span className="fs-5 text-dark-emphasis pe-3 col-3">
+              Total Units
+            </span>
+            <span className="card-body fs-1">{totalQuantity}</span>
           </div>
         </div>
-        <div className="card" style={{ width: "18rem" }}>
-          <span className="pt-2 fs-5">Booked Stock</span>
-          <div className="card-body fs-1">
-            {bookedValue.toLocaleString("hi-IN")}
+        <div
+          className="card bg-info-subtle bg-gradient"
+          style={{ width: "18rem" }}
+        >
+          <div className="d-flex flex-row-reverse justify-content-center align-items-center">
+            <span className="fs-5 text-dark-emphasis pe-2 col-5">
+              Current Stock (units)
+            </span>
+            <span className="card-body fs-1">{currentStock}</span>
+          </div>
+        </div>
+        <div
+          className="card bg-danger-subtle bg-gradient"
+          style={{ width: "18rem" }}
+        >
+          <div className="d-flex flex-row-reverse justify-content-center align-items-center">
+            <span className="fs-5 text-dark-emphasis col-4">
+              Current Stock (₹)
+            </span>
+            <span className="card-body fs-1 ps-3">
+              {currentStockvalue.toLocaleString("hi-IN")}
+            </span>
+          </div>
+        </div>
+        <div className="card bg-info bg-gradient" style={{ width: "18rem" }}>
+          <div className="d-flex flex-row-reverse justify-content-center align-items-center">
+            <span className="fs-5 text-dark-emphasis pe-3 col-4">
+              Booked Stock (₹)
+            </span>
+            <span className="card-body fs-1">
+              {bookedValue.toLocaleString("hi-IN")}
+            </span>
           </div>
         </div>
       </div>
       <br />
-      <div className="d-flex flex-row justify-content-center align-items-center">
-        <div className="bg-light p-2">
-          <span className="fs-5 pt-2 pb-2 fw-bolder">Customer Data</span>
+      <div className="d-flex flex-row justify-content-center align-items-center flex-wrap gap-5 mx-auto">
+        <div className="card rounded-2" style={{ width: "45%" }}>
+          <span className="fs-5 fw-bold card-header bg-light text-start">
+            <CorporateFareRoundedIcon /> Customer Data
+          </span>
           {billedCustomers && (
             <BarChart
+              className="card-body"
               width={500}
-              height={500}
+              height={400}
               data={billedCustomers}
               margin={{
                 top: 5,
@@ -134,12 +192,14 @@ function Dashboard() {
             </BarChart>
           )}
         </div>
-        <div className="bg-light p-3">
-          <span className="fs-4 pt-2 pb-2 fw-bolder">Inventory Data</span>
+        <div className="card rounded-2" style={{ width: "45%" }}>
+          <span className="fs-5 fw-bolder card-header text-start">
+            <CorporateFareRoundedIcon /> Inventory Data
+          </span>
           {inventory && (
             <BarChart
               width={500}
-              height={300}
+              height={400}
               data={inventory}
               margin={{
                 top: 20,
@@ -159,59 +219,39 @@ function Dashboard() {
           )}
         </div>
       </div>
-      <div className="d-flex flex-row justify-content-center align-items-center">
-        {roleID !== 1 && (
-          <div className="card bg-light p-3" style={{ width: "25%" }}>
-            <span className="pt-2 fs-5">Pending Approvals</span>
-            <div className="card-body fs-1">
-              {roleID == 1 ? (
-                <span>Access Disabled</span>
-              ) : (
-                <span>{workflow}</span>
-              )}
-            </div>
-            <span>
-              {roleID == 1 ? (
-                <></>
-              ) : (
-                <button
-                  className="btn btn-outline-dark"
-                  onClick={() => navigate("/dashboard/approvals")}
-                >
-                  View
-                </button>
-              )}
-            </span>
+      <hr />
+      <div className="d-flex flex-row justify-content-center align-items-center mx-auto pt-2 pb-2">
+        <div className="card container">
+          <span className="card-header fs-5 fw-bold">Customers Data</span>
+          <div className="card-body">
+            <table className="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer Name</th>
+                  <th>Contact No</th>
+                  <th>Email Address</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {customers &&
+                  customers.map((customer, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{customer.customerName}</td>
+                        <td>{customer.contactNo}</td>
+                        <td>{customer.email}</td>
+                        <td>
+                          <button className="btn btn-outline-dark">View</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
           </div>
-        )}
-        <div style={{ width: "75%" }}>
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Customer Name</th>
-                <th>Contact No</th>
-                <th>Email Address</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customers &&
-                customers.map((customer, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{customer.customerName}</td>
-                      <td>{customer.contactNo}</td>
-                      <td>{customer.email}</td>
-                      <td>
-                        <button className="btn btn-outline-dark">View</button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

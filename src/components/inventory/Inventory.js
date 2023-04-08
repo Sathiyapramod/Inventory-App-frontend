@@ -89,9 +89,9 @@ function Inventory() {
           <ReceiptIcon /> Warehouse details
         </span>
         <span>
-          <button className="btn btn-secondary" onClick={() => getInventory()}>
+          {/* <button className="btn btn-secondary" onClick={() => getInventory()}>
             Get Inventory Details
-          </button>
+          </button> */}
           <button
             className="btn btn-outline-dark"
             data-bs-toggle="modal"
@@ -190,7 +190,7 @@ function AddInventory(props) {
         tabIndex="-1"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-dialog-centered modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
@@ -203,29 +203,30 @@ function AddInventory(props) {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-              <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Item Name</label>
-                <div className="col-5">
+            <div className="modal-body bg-light">
+              <div className="d-flex flex-row justify-content-between align-items-center gap-2">
+                <div className="col-5 form-floating">
                   <input
                     type="text"
-                    className="form-control me-2"
+                    className="form-control form-control-lg me-2"
+                    id="floatingLabel"
                     onChange={(event) => props.setName(event.target.value)}
                   />
+                  <label className="form-label" htmlFor="floatingLabel">
+                    Item Name
+                  </label>
                 </div>
-              </div>
-              <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Units</label>
-                <div className="col-5">
+                <div className="col-5 form-floating">
                   <select
-                    className="form-select"
+                    className="form-select form-select-lg me-2"
                     id="floatingSelect"
-                    defaultValue="grams"
+                    defaultValue="Select-One"
                     onChange={(event) => {
                       props.setUnits(event.target.value);
                       console.log(event.target.value);
                     }}
                   >
+                    <option defaultValue="Select-One">--Select-One--</option>
                     <option defaultValue="grams">grams</option>
                     <option defaultValue="lot">lot</option>
                     <option defaultValue="nos">nos</option>
@@ -233,32 +234,40 @@ function AddInventory(props) {
                     <option defaultValue="quintals">quintals</option>
                     <option defaultValue="sqm">sqm</option>
                   </select>
+                  <label className="form-label" htmlFor="floatingSelect">
+                    Units
+                  </label>
                 </div>
               </div>
-              <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Quantity</label>
-                <div className="col-5">
+              <br />
+              <div className="d-flex flex-row justify-content-center align-items-center gap-5">
+                <div className="col-2 form-floating">
                   <input
-                    className="form-control me-2"
+                    className="form-control form-control-lg me-2"
                     type="number"
+                    id="floatingLabel"
                     onChange={(event) => {
                       props.setQty(event.target.value);
                     }}
                   />
+                  <label className="form-label" htmlFor="floatingLabel">
+                    Quantity
+                  </label>
                 </div>
-              </div>
-              <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <label className="form-label">Price</label>
-                <div className="col-5">
+                <div className="col-5 form-floating">
                   <input
-                    className="form-control me-2"
+                    className="form-control form-control-lg me-2"
                     type="number"
+                    id="floatingLabel"
                     step={5}
                     min={10}
                     onChange={(event) => {
                       props.setRate(event.target.value);
                     }}
                   />
+                  <label className="form-label" htmlFor="floatingLabel">
+                    Price
+                  </label>
                 </div>
               </div>
             </div>
@@ -296,11 +305,11 @@ function EditInventory(props) {
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-lg">
+      <div className="modal-dialog modal-xl modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">
-              Edit Inventory
+              Edit Inventory - {props.item.name}
             </h1>
             <button
               type="button"
@@ -310,72 +319,83 @@ function EditInventory(props) {
             ></button>
           </div>
           <div className="modal-body">
-            <h6>Only Rate can be revised !!</h6>
-            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-              <label className="form-label">Item Name</label>
-              <div className="col-5">
+            <h5>Note: Only Rate can be revised !!</h5>
+            <div className="d-flex flex-row justify-content-between align-items-center gap-2">
+              <div className="col-5 form-floating">
                 <input
                   type="text"
-                  className="form-control me-2"
+                  id="floatingInputDisabled"
+                  className="form-control"
                   defaultValue={props.item.name}
-                  disabled
+                  readOnly
                 />
+                <label htmlFor="floatingInputDisabled">Item Name</label>
               </div>
-            </div>
-            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-              <label className="form-label">Units</label>
-              <div className="col-5">
+              <div className="col-5 form-floating">
                 <input
                   type="text"
+                  id="floatingreadonly"
                   className="form-control me-2"
                   defaultValue={props.item.units}
-                  disabled
-                ></input>
+                  readOnly
+                />
+                <label className="form-label" htmlFor="floatingreadonly">
+                  Units
+                </label>
               </div>
             </div>
-            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-              <label className="form-label">Total Quantity</label>
-              <div className="col-5">
+            <br />
+            <div className="d-flex flex-row justify-content-between align-items-center gap-2">
+              <div className="col-3 form-floating">
                 <input
                   type="text"
+                  id="floatingreadonly"
                   className="form-control me-2"
                   defaultValue={props.item.totalQty}
-                  disabled
-                ></input>
+                  readOnly
+                />
+                <label className="form-label" htmlFor="floatingreadonly">
+                  Total Quantity
+                </label>
               </div>
-            </div>
-            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-              <label className="form-label">Billed Quantity</label>
-              <div className="col-5">
+              <div className="col-3 form-floating">
                 <input
                   type="text"
                   className="form-control me-2"
                   defaultValue={props.item.billedQty}
-                  disabled
-                ></input>
+                  readOnly
+                />
+                <label className="form-label">Billed Quantity</label>
               </div>
-            </div>
-            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-              <label className="form-label"> Available Quantity</label>
-              <div className="col-5">
+              <div className="col-3 form-floating">
                 <input
                   type="text"
                   className="form-control me-2"
+                  id="floatingLabel"
                   defaultValue={props.item.availableQty}
-                  disabled
-                ></input>
+                  readOnly
+                />
+                <label className="form-label" htmlFor="floatingLabel">
+                  {" "}
+                  Available Quantity
+                </label>
               </div>
             </div>
-            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-              <label className="form-label"> Rate</label>
-              <div className="col-5">
+            <br />
+            <div className="d-flex flex-row justify-content-end align-items-center gap-2">
+              <div className="col-3 form-floating">
                 <input
                   type="number"
-                  className="form-control me-2"
+                  id="floatingLabel"
+                  className="form-control form-control-lg me-2"
                   min={props.item.rate}
                   defaultValue={props.item.rate}
+                  step={10}
                   onChange={(event) => props.setRate(event.target.value)}
-                ></input>
+                />
+                <label className="form-label" htmlFor="floatingLabel">
+                  Rate(₹)
+                </label>
               </div>
             </div>
           </div>

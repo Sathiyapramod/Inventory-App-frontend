@@ -75,7 +75,8 @@ function Customers() {
               "Customer Name",
               "GST Number",
               "Contact Number",
-              "Actions",
+              "Edit Action",
+              "Delete Action",
             ].map((customerDetail, index) => {
               return <th key={index}>{customerDetail}</th>;
             })}
@@ -104,6 +105,24 @@ function Customers() {
                     </button>
                     <ViewCustomer customerData={customerData} />
                   </td>
+                  <td>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        // console.log(customerDetail._id);
+                        fetch(`${backendAPI}/customers/${customerDetail._id}`, {
+                          method: "DELETE",
+                        })
+                          .then((response) => response.json())
+                          .then(() =>
+                            alert("Customer Data Deleted Successfully")
+                          );
+                        getCustomerData();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               );
             })}
@@ -130,7 +149,7 @@ function CreateCustomer({
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="staticBackdropLabel">
@@ -144,47 +163,68 @@ function CreateCustomer({
             ></button>
           </div>
           <div className="modal-body">
-            <div className="d-flex flex-row justify-content-center align-items-center">
-              <label className="form-label">Customer Name</label>
-              <input
-                type="text"
-                className="form-control me-2"
-                onChange={(event) => {
-                  setCustomername(event.target.value);
-                }}
-              />
-            </div>
-            <div className="d-flex flex-row justify-content-center align-items-center">
-              <label className="form-label">GST Number</label>
-              <input
-                type="text"
-                className="form-control me-2"
-                onChange={(event) => {
-                  setGstNumber(event.target.value);
-                }}
-              />
-            </div>
-            <div className="d-flex flex-row justify-content-center align-items-center">
-              <label className="form-label">Contact No</label>
-              <input
-                type="text"
-                className="form-control me-2"
-                onChange={(event) => {
-                  setContactNo(event.target.value);
-                }}
-              />
-            </div>
-            <div className="d-flex flex-row justify-content-center align-items-center">
-              <label className="form-label">Billing Address</label>
-              <input
-                type="text"
-                className="form-control me-2"
-                onChange={(event) => {
-                  setAddress(event.target.value);
-                }}
-              />
+            <div className="d-flex flex-row justify-content-between align-items-center ps-2 pe-2">
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <span className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control me-2"
+                    onChange={(event) => {
+                      setCustomername(event.target.value);
+                    }}
+                    id="floatingCustomer"
+                  />
+                  <label className="form-label" htmlFor="floatingCustomer">
+                    Enter Customer Name
+                  </label>
+                </span>
+                <br />
+                <span className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control me-2"
+                    onChange={(event) => {
+                      setGstNumber(event.target.value);
+                    }}
+                    id="floatingGSTNumber"
+                  />
+                  <label className="form-label" htmlFor="floatingGSTNumber">
+                    GST Number
+                  </label>
+                </span>{" "}
+                <br />
+                <span className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control me-2"
+                    onChange={(event) => {
+                      setContactNo(event.target.value);
+                    }}
+                    id="floatingContact"
+                  />
+                  <label className="form-label" htmlFor="floatingContact">
+                    Contact No
+                  </label>
+                </span>
+                <br />
+              </div>
+              <div className="col-5 form-floating">
+                <textarea
+                  type="text"
+                  className="form-control me-2"
+                  rows={5}
+                  onChange={(event) => {
+                    setAddress(event.target.value);
+                  }}
+                  id="floatingAddress"
+                />
+                <label className="form-label" htmlFor="floatingAddress">
+                  Billing Address
+                </label>
+              </div>
             </div>
           </div>
+
           <div className="modal-footer">
             <button
               type="button"
@@ -261,7 +301,7 @@ function ViewCustomer({ customerData }) {
                     <textarea
                       type="text"
                       className="form-control me-2"
-                      rows={3}
+                      rows={5}
                       defaultValue={customerData.address}
                       id="floatingLabel"
                     />
