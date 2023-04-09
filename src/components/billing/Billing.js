@@ -237,15 +237,15 @@ function ViewBilldetail(props) {
               <div className="d-flex flex-column justify-content-center align-items-center position-absolute bottom-0 end-0 pe-4">
                 <span className="d-flex flex-row justify-content-end align-items-end gap-2">
                   <label className="form-label">Gross Total</label>
-                  <span className="fs-4">${props.billdetails.grossTotal}</span>
+                  <span className="fs-4">₹{props.billdetails.grossTotal}</span>
                 </span>
                 <span className="d-flex flex-row justify-content-end align-items-end gap-2">
                   <label className="form-label col">GST </label>
-                  <span className="fs-4">${props.billdetails.gst}</span>
+                  <span className="fs-4">₹{props.billdetails.gst}</span>
                 </span>
                 <span className="d-flex flex-row justify-content-end align-items-end gap-2">
                   <label className="form-label col">Total Amount </label>
-                  <span className="fs-4">${props.billdetails.NetTotal}</span>
+                  <span className="fs-4">₹{props.billdetails.NetTotal}</span>
                 </span>
               </div>
               <div className="position-absolute bottom-0 start-0 ps-3 fst-italic">

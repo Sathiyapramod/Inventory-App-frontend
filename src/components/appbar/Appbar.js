@@ -51,6 +51,51 @@ function Appbar() {
               />
             </Link>
           </span>
+        )}{" "}
+        {flag ? (
+          <Link to="/customers" style={LinkStyling}>
+            <span className="sidebar-menu-items ps-3">
+              <HandshakeIcon /> Customer
+            </span>
+          </Link>
+        ) : (
+          <span className="mx-auto">
+            <Link to="/customers" style={LinkStyling}>
+              <HandshakeIcon
+                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
+              />
+            </Link>
+          </span>
+        )}
+        {flag ? (
+          <Link to="/billing" style={LinkStyling}>
+            <span className="sidebar-menu-items ps-3">
+              <ReceiptIcon /> Billing
+            </span>
+          </Link>
+        ) : (
+          <span className="mx-auto">
+            <Link to="/billing" style={LinkStyling}>
+              <ReceiptIcon
+                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
+              />
+            </Link>
+          </span>
+        )}
+        {flag ? (
+          <Link to="/workflow" style={LinkStyling}>
+            <span className="sidebar-menu-items ps-3">
+              <AssessmentTwoToneIcon /> Workflow
+            </span>
+          </Link>
+        ) : (
+          <span className="mx-auto">
+            <Link to="/workflow" style={LinkStyling}>
+              <AssessmentTwoToneIcon
+                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
+              />
+            </Link>
+          </span>
         )}
         {flag ? (
           <Link to="/profile" style={LinkStyling}>
@@ -67,103 +112,66 @@ function Appbar() {
             </Link>
           </span>
         )}
-        
-          {" "}
-          {flag ? (
-            <Link to="/customers" style={LinkStyling}><span className="sidebar-menu-items ps-3">
-              <HandshakeIcon /> Customer
-            </span></Link>
-          ) : (
-            <span className="mx-auto">
-              <Link to="/customers" style={LinkStyling}><HandshakeIcon
-                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-              />
-            </Link></span>
-          )}
-        
-        
-          {flag ? (
-            <Link to="/billing" style={LinkStyling}><span className="sidebar-menu-items ps-3">
-              <ReceiptIcon /> Billing
-            </span></Link>
-          ) : (
-            <span className="mx-auto">
-              <Link to="/billing" style={LinkStyling}><ReceiptIcon
-                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-              />
-            </Link></span>
-          )}
-        
-        {flag ? (
-          <Link to="/workflow" style={LinkStyling}>
-          <span className="sidebar-menu-items ps-3">
-            <AssessmentTwoToneIcon /> Workflow
-          </span>
-          </Link>
-        ) : (
-          <span className="mx-auto">
-            <Link to="/workflow" style={LinkStyling}>
-            <AssessmentTwoToneIcon
-              sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-            />
-            </Link>
-          </span>
-        )}
-        {flag ? (
-          <Link to="/settings" style={LinkStyling}><span className="sidebar-menu-items ps-3">
-            <PsychologyIcon /> Settings
-          </span></Link>
-        ) : (
-          <span className="mx-auto">
-            <Link to="/settings" style={LinkStyling}><PsychologyIcon
-              sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-            /></Link>
-          </span>
-        )}
       </div>{" "}
       <br />
       <Divider />
       <span className="d-flex flex-column gap-4 justify-content-center align-items-start text-secondary ps-0">
         {flag ? (
-          <Link to="/warehouse" style={LinkStyling}><span className="sidebar-submenu-items ps-3">
-            <WarehouseIcon /> Warehouse{" "}
-          </span></Link>
+          <Link to="/warehouse" style={LinkStyling}>
+            <span className="sidebar-submenu-items ps-3">
+              <WarehouseIcon /> Warehouse{" "}
+            </span>
+          </Link>
         ) : (
           <span className="mx-auto">
-            <Link to="/warehouse" style={LinkStyling}><WarehouseIcon
-              sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-            /></Link>
+            <Link to="/warehouse" style={LinkStyling}>
+              <WarehouseIcon
+                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
+              />
+            </Link>
           </span>
         )}
         {flag ? (
-          <Link to="/purchaseorder" style={LinkStyling}><span className="sidebar-submenu-items ps-3">
-            <PaidIcon /> Purchase Order{" "}
-          </span></Link>
+          <Link to="/purchaseorder" style={LinkStyling}>
+            <span className="sidebar-submenu-items ps-3">
+              <PaidIcon /> Purchase Order{" "}
+            </span>
+          </Link>
         ) : (
           <span className="mx-auto">
-            <Link to="/purchaseorder" style={LinkStyling}><PaidIcon sx={{ fontSize: 40, "&:hover": { color: "grey" } }} /></Link>
+            <Link to="/purchaseorder" style={LinkStyling}>
+              <PaidIcon sx={{ fontSize: 40, "&:hover": { color: "grey" } }} />
+            </Link>
           </span>
         )}
         {flag ? (
-          <Link to="/transfer" style={LinkStyling}><span className="sidebar-submenu-items ps-3">
-            <InventorySharpIcon /> Transfer{" "}
-          </span></Link>
+          <Link to="/transfer" style={LinkStyling}>
+            <span className="sidebar-submenu-items ps-3">
+              <InventorySharpIcon /> Transfer{" "}
+            </span>
+          </Link>
         ) : (
           <span className="mx-auto">
-            <Link to="/transfer" style={LinkStyling}><InventorySharpIcon
-              sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-            /></Link>
+            <Link to="/transfer" style={LinkStyling}>
+              <InventorySharpIcon
+                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
+              />
+            </Link>
           </span>
         )}
         {flag ? (
-          <Link to="/payment" style={LinkStyling}><span className="sidebar-submenu-items ps-3">
-            <CurrencyRupeeSharpIcon /> Payment{" "}
-          </span></Link>
+          <Link to="/payment" style={LinkStyling}>
+            <span className="sidebar-submenu-items ps-3">
+              <CurrencyRupeeSharpIcon /> Payment{" "}
+            </span>
+          </Link>
         ) : (
           <span className="mx-auto">
-            <Link to="/payment" style={LinkStyling}><CurrencyRupeeSharpIcon
-              sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
-            /></Link>
+            <Link to="/payment" style={LinkStyling}>
+              <CurrencyRupeeSharpIcon
+                sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
+              />
+            </Link>
           </span>
         )}
       </span>
