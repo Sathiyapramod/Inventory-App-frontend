@@ -18,10 +18,10 @@ function Billing() {
     console.log(page);
     let startIndex = (page - 1) * 5;
     let endIndex = startIndex + 4;
-    fetch(`${backendAPI}/billing`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/billing`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => {
@@ -29,12 +29,12 @@ function Billing() {
         setBills(result.slice(startIndex, endIndex));
       });
   };
-  
+
   useEffect(() => {
-    fetch(`${backendAPI}/billing`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/billing`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => setBills(result));
