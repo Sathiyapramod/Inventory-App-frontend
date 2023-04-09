@@ -18,13 +18,11 @@ function createWindow() {
 
   //load the index.html from a url
   win.loadURL("http://localhost:3000");
-  
-  child.loadURL('https://github.com');
   // Open the DevTools.
   win.webContents.openDevTools();
-  child.removeMenu();
-  child.setMenu(null);
-  child.once('ready-to-show',()=>child.show());
+  // child.removeMenu();
+  // child.setMenu(null);
+  // child.once('ready-to-show',()=>child.show());
 }
 
 app.whenReady().then(createWindow);

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useContext, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { backendAPI } from "./components/General";
 import Appbar from "./components/appbar/Appbar";
 import Navbar from "./components/navbar/Navbar";
@@ -15,9 +15,7 @@ import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import CreateBill from "./components/billing/CreateBill";
 import Approvals from "./components/Dashboard/Approvals";
 import StockTransfer from "./components/Transfer/StockTransfer";
-import Workflow from './components/Workflow/Workflow';
-
-const Name = createContext();
+import Workflow from "./components/Workflow/Workflow";
 
 function App() {
   const navigate = useNavigate();
@@ -77,6 +75,7 @@ function App() {
                   />
                 }
               />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="/dashboard"
                 element={
@@ -157,8 +156,22 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/transfer" element={<ProtectedRoute><StockTransfer /></ProtectedRoute>} />
-              <Route path="/workflow" element={<ProtectedRoute><Workflow /></ProtectedRoute>} />
+              <Route
+                path="/transfer"
+                element={
+                  <ProtectedRoute>
+                    <StockTransfer />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/workflow"
+                element={
+                  <ProtectedRoute>
+                    <Workflow />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </div>
         </div>
@@ -167,6 +180,7 @@ function App() {
   );
 }
 function Login({ setUsername, setPassword, newSignin }) {
+  const navigate = useNavigate();
   return (
     <div className="login mx-auto">
       <div className="d-flex flex-column justify-content-center align-items-center gap-2">
@@ -200,6 +214,14 @@ function Login({ setUsername, setPassword, newSignin }) {
           >
             Login
           </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            Register
+          </button>
         </div>
       </div>
     </div>
@@ -213,6 +235,97 @@ function ProtectedRoute({ children }) {
   ) : (
     <div>
       <Navigate replace to="/" />
+    </div>
+  );
+}
+
+function Register() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [jobRole, setJobrole] = useState("");
+  const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
+
+  const Register = () => {
+    const newUser = {
+      username,
+      password,
+      jobRole,
+      email,
+    };
+    // console.log(newUser);
+    fetch(`${backendAPI}/users/signup`, {
+      method: "POST",
+      body: JSON.stringify(newUser),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      });
+  };
+
+  return (
+    <div className="d-flex flex-column justify-content-center align-items-center gap-5 ">
+      <span className="fs-2">Register with Us. !!</span>
+      <div className="form-floating">
+        <input
+          type="text"
+          className="form-control me-2"
+          id="floatingLabel"
+          onChange={(event) => setUsername(event.target.value)}
+        />
+        <label className="form-label" htmlFor="floatingLabel">
+          Username
+        </label>
+      </div>
+      <div className="form-floating">
+        <input
+          type="password"
+          className="form-control me-2"
+          id="floatingLabel"
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <label className="form-label" htmlFor="floatingLabel">
+          Password
+        </label>
+      </div>
+      <div className="d-flex flex-row justify-content-around align-items-center gap-5">
+        <div className="form-floating">
+          <select
+            className="form-control me-2 col-5"
+            onChange={(event) => setJobrole(event.target.value)}
+          >
+            <option defaultValue="stores">stores</option>
+            <option defaultValue="accounts">accounts</option>
+            <option defaultValue="manager">manager</option>
+            <option defaultValue="unit head">head</option>
+          </select>
+          <label className="form-label" htmlFor="floatingLabel">
+            Job Role
+          </label>
+        </div>
+        <div className="form-floating">
+          <input
+            type="email"
+            className="form-control me-2"
+            id="floatingLabel"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <label className="form-label" htmlFor="floatingLabel">
+            Email ID
+          </label>
+        </div>
+      </div>
+      <button className="btn btn-outline-primary" onClick={() => Register()}>
+        Register
+      </button>
+      <button className="btn btn-outline-primary" onClick={() => navigate("/")}>
+        Go to Home Page
+      </button>
     </div>
   );
 }

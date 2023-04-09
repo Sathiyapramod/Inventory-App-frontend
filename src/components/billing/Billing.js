@@ -37,7 +37,10 @@ function Billing() {
       },
     })
       .then((response) => response.json())
-      .then((result) => setBills(result));
+      .then((result) => {
+        setBills(result);
+        console.log(result);
+      });
   }, []);
   return (
     <div>
@@ -133,7 +136,6 @@ function Billing() {
 }
 
 function ViewBilldetail(props) {
-  // console.log(props.billdetails.items);
   return (
     <div
       className="modal fade printing-page"
@@ -169,40 +171,88 @@ function ViewBilldetail(props) {
               <br />
               <div className="d-flex flex-row justify-content-between align-items-center ps-2 pe-2">
                 <div>
-                  <div className="d-flex flex-row justify-content-start align-items-center gap-2">
-                    <label>Customer Name</label>
-                    <span className="fs-3">
-                      {"BIL".concat(props.billdetails._id)}
-                    </span>
+                  <div className="d-flex flex-row justify-content-between align-items-center gap-2">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        defaultValue={props.billdetails._id}
+                        className="form-control me-2"
+                        id="floatingLabel"
+                        readOnly
+                      />
+                      <label className="form-label" htmlFor="floatingLabel">
+                        Billing ID
+                      </label>
+                    </div>
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        defaultValue={props.billdetails.customerName}
+                        className="form-control me-2"
+                        id="floatingLabel"
+                        readOnly
+                      />
+                      <label className="form-label" htmlFor="floatingLabel">
+                        Customer Name
+                      </label>
+                    </div>
                   </div>
-                  <div className="d-flex flex-row justify-content-start align-items-center gap-2">
-                    <label>Customer Name</label>
-                    <span className="fs-3">
-                      {props.billdetails.customerName}
-                    </span>
+                  <div className="form-floating">
+                    <input
+                      type="text"
+                      defaultValue={props.billdetails.billMode}
+                      className="form-control me-2"
+                      id="floatingLabel"
+                      readOnly
+                    />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Bill Mode
+                    </label>
                   </div>
-                  <div className="d-flex flex-row justify-content-start align-items-center gap-2">
-                    <label>Bill Mode</label>
-                    <span className="fs-3">{props.billdetails.billMode}</span>
-                  </div>
-                  <div className="d-flex flex-row justify-content-start align-items-center gap-2">
-                    <label>GST Number</label>
-                    <span className="fs-3">{props.billdetails.billMode}</span>
+                  <div className="form-floating">
+                    <input
+                      type="text"
+                      defaultValue={props.billdetails.creditPeriod}
+                      className="form-control me-2"
+                      id="floatingLabel"
+                      readOnly
+                    />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Credit Period
+                    </label>
                   </div>
                 </div>
                 <div>
-                  <div className="d-flex flex-row justify-content-end align-items-center gap-2">
-                    <label>Billing Address</label>
-                    <span className="fs-3">Address</span>
+                  <div className="form-floating">
+                    <input
+                      type="text"
+                      defaultValue={props.billdetails.billingAddress}
+                      className="form-control me-2"
+                      id="floatingLabel"
+                      readOnly
+                    />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Billing Address
+                    </label>
                   </div>
-                  <div className="d-flex flex-row justify-content-end align-items-center gap-2">
-                    <label>Shipping Address</label>
-                    <span className="fs-3">Address</span>
+                  <div className="form-floating">
+                    <input
+                      type="text"
+                      defaultValue={props.billdetails.billingAddress}
+                      className="form-control me-2"
+                      id="floatingLabel"
+                      readOnly
+                    />
+                    <label className="form-label" htmlFor="floatingLabel">
+                      Shipping Address
+                    </label>
                   </div>
                 </div>
               </div>
+              <br />
+              <hr />
               <div className="d-flex flex-row justify-content-center align-items-start">
-                <table className="table container table-bordered table-hover fs-5">
+                <table className="table container table-bordered table-hover">
                   <thead>
                     <tr>
                       {[
@@ -234,7 +284,7 @@ function ViewBilldetail(props) {
                   </tbody>
                 </table>
               </div>
-              <div className="d-flex flex-column justify-content-center align-items-center position-absolute bottom-0 end-0 pe-4">
+              <div className="position-absolute bottom-0 end-0 pe-4">
                 <span className="d-flex flex-row justify-content-end align-items-end gap-2">
                   <label className="form-label">Gross Total</label>
                   <span className="fs-4">₹{props.billdetails.grossTotal}</span>

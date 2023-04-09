@@ -14,6 +14,9 @@ function CreateBill() {
   const [creditPeriod, setCreditPeriod] = useState("Not Applicable");
   const [grossTotal, setGrossTotal] = useState(0);
   const [gst, setGst] = useState(0);
+  const [gstNumber, setGSTNumber] = useState("");
+  const [billingAddress, setBillingAddress] = useState("");
+  const [customerdata, setCustomerData] = useState("");
   const [NetTotal, setNetTotal] = useState(0);
   const [itemList, setItemList] = useState([]);
   const [units, setUnit] = useState({});
@@ -48,10 +51,10 @@ function CreateBill() {
     })
       .then((response) => response.json())
       .then((result) => setInventory(result));
-    fetch(`${backendAPI}/customers`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/customers`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => setCustomers(result));
@@ -62,6 +65,15 @@ function CreateBill() {
     setNetTotal(Math.ceil(total * 1.18));
   }, [inventory, itemList, grossTotal, gst, NetTotal]);
 
+  const handleCustomer = (customerSelected) => {
+    let data = customers.find((customerdata) => {
+      return customerdata.customerName === customerSelected;
+    });
+    setCustomerData(data);
+    setGSTNumber(data.gstNumber);
+    setBillingAddress(data.address);
+  };
+
   async function CreateBill() {
     let newBill = {
       customerName,
@@ -69,10 +81,13 @@ function CreateBill() {
       creditPeriod,
       items: itemList,
       grossTotal,
+      gstNumber,
+      billingAddress,
       gst,
       NetTotal,
       date: new Date(date).toLocaleDateString(),
     };
+    console.log(newBill);
     const data = await fetch(`${backendAPI}/billing`, {
       method: "POST",
       body: JSON.stringify(newBill),
@@ -126,6 +141,8 @@ function CreateBill() {
         customers={customers}
         date={date}
         setStartDate={setStartDate}
+        handleCustomer={handleCustomer}
+        customerdata={customerdata}
       />
       {itemList.length !== 0 && (
         <div>
@@ -169,6 +186,7 @@ function AddBill(props) {
             id="floatingSelectGrid"
             onChange={(event) => {
               props.setCustomerName(event.target.value);
+              props.handleCustomer(event.target.value);
             }}
           >
             <option defaultValue="--SelectOne--">--SelectOne--</option>
@@ -182,6 +200,7 @@ function AddBill(props) {
           </select>
           <label htmlFor="floatingSelectGrid">Customer Name</label>
         </div>
+
         <div className="col-5 form-floating">
           <select
             className="form-select"
@@ -198,6 +217,30 @@ function AddBill(props) {
             Billing Mode
           </label>
         </div>
+      </div>
+      <div className="col-5 form-floating">
+        <input
+          type="text"
+          className="form-control me-2"
+          id="floatingLabel"
+          defaultValue={props.customerdata.gstNumber}
+          readOnly
+        />
+        <label className="form-label" htmlFor="floatingLabel">
+          GST Number
+        </label>
+      </div>
+      <div className="col-5 form-floating">
+        <input
+          type="text"
+          className="form-control me-2"
+          id="floatingLabel"
+          defaultValue={props.customerdata.address}
+          readOnly
+        />
+        <label className="form-label" htmlFor="floatingLabel">
+          GST Number
+        </label>
       </div>
       <br />
       <div>
