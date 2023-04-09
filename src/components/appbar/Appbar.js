@@ -95,14 +95,14 @@ function Appbar() {
           )}
         
         {flag ? (
-          <Link to="/reports" style={LinkStyling}>
+          <Link to="/workflow" style={LinkStyling}>
           <span className="sidebar-menu-items ps-3">
-            <AssessmentTwoToneIcon /> Reports
+            <AssessmentTwoToneIcon /> Workflow
           </span>
           </Link>
         ) : (
           <span className="mx-auto">
-            <Link to="/reports" style={LinkStyling}>
+            <Link to="/workflow" style={LinkStyling}>
             <AssessmentTwoToneIcon
               sx={{ fontSize: 40, "&:hover": { color: "grey" } }}
             />

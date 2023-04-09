@@ -15,6 +15,7 @@ import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import CreateBill from "./components/billing/CreateBill";
 import Approvals from "./components/Dashboard/Approvals";
 import StockTransfer from "./components/Transfer/StockTransfer";
+import Workflow from './components/Workflow/Workflow';
 
 const Name = createContext();
 
@@ -157,6 +158,7 @@ function App() {
                 }
               />
               <Route path="/transfer" element={<ProtectedRoute><StockTransfer /></ProtectedRoute>} />
+              <Route path="/workflow" element={<ProtectedRoute><Workflow /></ProtectedRoute>} />
             </Routes>
           </div>
         </div>
