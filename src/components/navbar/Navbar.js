@@ -32,7 +32,7 @@ function Navbar({ user }) {
             <span className="fs-6 text-uppercase">{user.jobRole}</span>
           </span>
           <span className="ps-2">
-            <Avatar alt="profile-pic">K</Avatar>
+            <Avatar alt="profile-pic">{user.username.slice(0,1).toUpperCase()}</Avatar>
           </span>
           <span className="ps-2">
             <button className="btn">
