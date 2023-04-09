@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 // import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
@@ -21,11 +22,13 @@ function Navbar({ user }) {
                 navigate("/");
               }}
             >
-              Sign Out
+              <ExitToAppIcon /> Sign Out
             </button>
           </span>
           <span className="ps-2 d-flex flex-column justify-content-center align-items-start gap-1">
-            <span className="fs-5 fw-bolder text-uppercase">{user.username}</span>
+            <span className="fs-5 fw-bolder text-uppercase">
+              {user.username}
+            </span>
             <span className="fs-6 text-uppercase">{user.jobRole}</span>
           </span>
           <span className="ps-2">
