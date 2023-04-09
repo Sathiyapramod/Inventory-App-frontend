@@ -4,4 +4,4 @@ export const LinkStyling = {
 };
 
 
-export const backendAPI = "http://localhost:4000";
+export const backendAPI = "https://capstone-backend-alpha.vercel.app";
