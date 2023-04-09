@@ -3,26 +3,18 @@ const { app, BrowserWindow } = require("electron");
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    title:"Billing-App",
-    width: 900,
+    title: "Billing-App",
+    width: 1024,
     height: 600,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
     },
   });
 
-  const child = new BrowserWindow({
-    parent:win,
-    modal:true,
-  })
-
-  //load the index.html from a url
   win.loadURL("http://localhost:3000");
-  // Open the DevTools.
+
   win.webContents.openDevTools();
-  // child.removeMenu();
-  // child.setMenu(null);
-  // child.once('ready-to-show',()=>child.show());
 }
 
 app.whenReady().then(createWindow);
