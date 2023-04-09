@@ -8,10 +8,10 @@ function Profile({ user }) {
         <div>
           <div className="d-flex flex-row justify-content-between align-items-center p-3">
             <span className="fs-4">
-              <ReceiptIcon /> Billing Records
+              <ReceiptIcon /> Profile Details
             </span>
             <span>
-              <button className="btn btn-secondary">+ CREATE BILL</button>
+              <button className="btn btn-secondary">View Profile </button>
             </span>
           </div>
           <hr />

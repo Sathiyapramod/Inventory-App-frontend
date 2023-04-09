@@ -26,7 +26,9 @@ function Workflow() {
           <ReceiptIcon /> Workflow Dashboard
         </span>
         <span>
-          <button className="btn btn-secondary">CREATE WORKFLOW </button>
+          {localStorage.getItem("jobRole") === "admin" && (
+            <button className="btn btn-secondary">CREATE WORKFLOW </button>
+          )}
         </span>
       </div>
       <hr />

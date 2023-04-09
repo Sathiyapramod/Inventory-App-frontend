@@ -33,7 +33,7 @@ function Appbar() {
         </button>
       </span>
       <br />
-      <span className="sidebar-logo">{flag ? <>Logo</> : <>❤</>}</span>
+      <span className="sidebar-logo">{flag ? <>Rampage</> : <>❤</>}</span>
       <br />
       <br />
       <div className="d-flex flex-column gap-4 justify-content-center align-items-start ps-0 sidebar-menu">
