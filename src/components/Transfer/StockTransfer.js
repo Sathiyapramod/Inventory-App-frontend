@@ -28,6 +28,7 @@ function StockTransfer() {
       body: JSON.stringify(data),
       headers: {
         "Content-type": "application/json",
+        "x-auth-token": localStorage.getItem("token")
       },
     })
       .then((response) => response.json())

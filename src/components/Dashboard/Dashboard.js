@@ -27,7 +27,11 @@ function Dashboard() {
   const [customers, setcustomers] = useState([]);
 
   const getBillData = () => {
-    fetch(`${backendAPI}/users/billabstract`)
+    fetch(`${backendAPI}/users/billabstract`,{
+      headers:{
+        "Content-type":"application/json"
+      }
+    })
       .then((response) => response.json())
       .then((result) => {
         setBilledcustomers(result);
