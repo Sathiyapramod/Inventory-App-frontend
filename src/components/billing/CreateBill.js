@@ -87,7 +87,6 @@ function CreateBill() {
       NetTotal,
       date: new Date(date).toLocaleDateString(),
     };
-    console.log(newBill);
     const data = await fetch(`${backendAPI}/billing`, {
       method: "POST",
       body: JSON.stringify(newBill),
@@ -100,7 +99,6 @@ function CreateBill() {
       console.log("error");
     } else {
       const response = await data.json();
-      console.log(response);
       alert(`Bill Created Successfully !!!`);
       navigate("/billing");
     }
@@ -252,7 +250,6 @@ function AddBill(props) {
                 id="floatingSelect"
                 onChange={(event) => {
                   props.setCreditPeriod(event.target.value);
-                  console.log(event.target.value);
                 }}
               >
                 <option defaultValue="30 days">30 days</option>
@@ -331,7 +328,6 @@ function AddBill(props) {
 }
 
 function AddItem(props) {
-  // console.log(props);
   return (
     <>
       <div

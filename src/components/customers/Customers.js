@@ -13,10 +13,10 @@ function Customers() {
   const [contactNo, setContactNo] = useState(0);
 
   const getCustomerData = () => {
-    fetch(`${backendAPI}/customers`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/customers`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => setCustomers(result));
@@ -34,7 +34,7 @@ function Customers() {
       body: JSON.stringify(newCustomer),
       headers: {
         "content-type": "application/json",
-        "x-auth-token":localStorage.getItem("token")
+        "x-auth-token": localStorage.getItem("token"),
       },
     });
     if (data.status === 401) console.log("error");
@@ -101,7 +101,6 @@ function Customers() {
                       className="btn btn-outline-success"
                       onClick={() => {
                         setCustomerData(customerDetail);
-                        // console.log(customerDetail);
                       }}
                       data-bs-toggle="modal"
                       data-bs-target="#viewCustomer"
@@ -114,12 +113,12 @@ function Customers() {
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
-                        // console.log(customerDetail._id);
+                        
                         fetch(`${backendAPI}/customers/${customerDetail._id}`, {
                           method: "DELETE",
-                          headers:{
-                            "x-auth-token": localStorage.getItem("token")
-                          }
+                          headers: {
+                            "x-auth-token": localStorage.getItem("token"),
+                          },
                         })
                           .then((response) => response.json())
                           .then(() =>
@@ -252,7 +251,6 @@ function CreateCustomer({
 }
 
 function ViewCustomer({ customerData }) {
-  //   console.log(customerData);
   return (
     <div>
       {customerData && (

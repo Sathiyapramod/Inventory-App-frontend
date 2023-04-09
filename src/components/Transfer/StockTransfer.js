@@ -14,7 +14,6 @@ function StockTransfer() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         setInventory(result);
       });
   };
@@ -22,18 +21,17 @@ function StockTransfer() {
   function AddStocktoDatabase() {
     const data = { newStock };
     const id = updationItem._id;
-    // console.log(data);
+
     fetch(`${backendAPI}/users/stock/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
         "Content-type": "application/json",
-        "x-auth-token": localStorage.getItem("token")
+        "x-auth-token": localStorage.getItem("token"),
       },
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         getInventory();
       });
   }

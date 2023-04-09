@@ -96,7 +96,7 @@ function Dashboard() {
       });
   }, [workflow]);
 
-  // console.log(workflow);
+
   return (
     <div>
       <div className="d-flex flex-row justify-content-between align-items-center p-3">

@@ -9,10 +9,10 @@ function Approvals() {
   const [purchaseOrder, setpurchaseOrder] = useState({});
   const [nextApprover, setNextApprover] = useState("");
   const getWorkflows = () => {
-    fetch(`${backendAPI}/workflow`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/workflow`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => {
@@ -123,43 +123,41 @@ function SendforNextApproval({
       purchaseOrder.isApproved == 0
     )
       latestApproval = { ...purchaseOrder, isApproved: 1 };
-    console.log(latestApproval);
 
     let id = allUsers.find((user) => {
       return user.empName === nextApprover.toLowerCase();
     });
-    console.log(typeof id._id);
 
     const data = await fetch(`${backendAPI}/workflow/${id._id}`, {
       method: "PUT",
       body: JSON.stringify(latestApproval),
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token")
+        "x-auth-token": localStorage.getItem("token"),
       },
     });
     if (data.status == 401) console.log("error");
     else {
       const response = await data.json();
-      console.log(response);
+
       alert("PO sent to the Next Approver successfully !!!");
     }
     let senderId = allUsers.find((user) => {
       return user.empName == localStorage.getItem("currentUser");
     })._id;
-    console.log(senderId);
+
     const data1 = await fetch(`${backendAPI}/workflow/update/${senderId}`, {
       method: "PUT",
       body: JSON.stringify(latestApproval),
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token")
+        "x-auth-token": localStorage.getItem("token"),
       },
     });
     if (data1.status == 401) console.log("error");
     else {
       const response = await data1.json();
-      console.log(response);
+
       alert("removed from sender's wf also ");
       getWorkflows();
     }

@@ -8,10 +8,10 @@ function Purchase() {
   const [orders, setOrders] = useState([]);
   const [orderItems, setItem] = useState({});
   const getOrders = () => {
-    fetch(`${backendAPI}/purchase`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/purchase`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => setOrders(result));
@@ -35,7 +35,6 @@ function Purchase() {
             <button
               className="btn btn-success"
               onClick={() => {
-                console.log("PO Creation Access Enabled");
                 navigate("/purchaseorder/create");
               }}
             >
@@ -235,20 +234,24 @@ function ViewPurchaseOrder({ orderItems }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderItems.POItems 
-                    ? orderItems.POItems.map((element, index) => {
-                        return (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{element.itemName}</td>
-                            <td>{element.units}</td>
-                            <td>{element.quantity}</td>
-                            <td>{element.rate}</td>
-                            <td>{element.total}</td>
-                          </tr>
-                        );
-                      })
-                    : <tr><td colSpan={6}>No Records</td></tr>}
+                  {orderItems.POItems ? (
+                    orderItems.POItems.map((element, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{element.itemName}</td>
+                          <td>{element.units}</td>
+                          <td>{element.quantity}</td>
+                          <td>{element.rate}</td>
+                          <td>{element.total}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan={6}>No Records</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -259,11 +262,11 @@ function ViewPurchaseOrder({ orderItems }) {
                   <span>₹{orderItems.grossTotal}</span>
                 </span>
                 <span className="d-flex flex-row justify-content-end align-items-center gap-2 pe-3 fs-5">
-                  <span>GST  </span>
+                  <span>GST </span>
                   <span>₹{orderItems.gst}</span>
                 </span>
                 <span className="d-flex flex-row justify-content-end align-items-center gap-2 pe-3 fs-5">
-                  <span>Total Amount  </span>
+                  <span>Total Amount </span>
                   <span>₹{orderItems.NetAmount}</span>
                 </span>
               </div>

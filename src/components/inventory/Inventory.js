@@ -20,7 +20,7 @@ function Inventory() {
       console.log("error");
     } else {
       const response = await data.json();
-      //   console.log(response);
+
       setInventory(response);
     }
   }
@@ -36,14 +36,14 @@ function Inventory() {
       body: JSON.stringify(newInventory),
       headers: {
         "content-type": "application/json",
-        "x-auth-token":localStorage.getItem('token')
+        "x-auth-token": localStorage.getItem("token"),
       },
     });
     if (data.status === 401) {
       console.log("error");
     } else {
       let response = await data.json();
-      console.log(response);
+
       alert("New Item Added Successfully !!");
       getInventory();
     }
@@ -51,9 +51,9 @@ function Inventory() {
   async function DeleteItem(identity) {
     fetch(`${backendAPI}/inventory/${identity}`, {
       method: "DELETE",
-      headers:{
-        "x-auth-token":localStorage.getItem('token')
-      }
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then(() => {
@@ -70,20 +70,20 @@ function Inventory() {
       availableQty: item.availableQty,
       rate,
     };
-    // console.log(updatedItem);
+
     const data = await fetch(`${backendAPI}/inventory/${identity}`, {
       method: "PUT",
       body: JSON.stringify(updatedItem),
       headers: {
         "content-type": "application/json",
-        "x-auth-token":localStorage.getItem('token')
+        "x-auth-token": localStorage.getItem("token"),
       },
     });
     if (data.status === 401) {
       console.log("Error");
     } else {
       let response = await data.json();
-      console.log(response);
+
       alert("Data Updated Successfully !!");
       getInventory();
     }
@@ -232,7 +232,6 @@ function AddInventory(props) {
                     defaultValue="Select-One"
                     onChange={(event) => {
                       props.setUnits(event.target.value);
-                      console.log(event.target.value);
                     }}
                   >
                     <option defaultValue="Select-One">--Select-One--</option>
@@ -305,7 +304,6 @@ function AddInventory(props) {
 }
 
 function EditInventory(props) {
-  // console.log(props);
   return (
     <div
       className="modal fade"

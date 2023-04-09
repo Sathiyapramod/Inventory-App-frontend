@@ -44,7 +44,6 @@ function App() {
     } else {
       const response = await data.json();
       setUser(response);
-      console.log(response);
       localStorage.setItem("token", response.token);
       localStorage.setItem("jobRole", response.jobRole);
       localStorage.setItem("currentUser", response.username);
@@ -254,7 +253,7 @@ function Register() {
       jobRole,
       email,
     };
-    // console.log(newUser);
+
     fetch(`${backendAPI}/users/signup`, {
       method: "POST",
       body: JSON.stringify(newUser),
@@ -264,7 +263,7 @@ function Register() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        navigate("/");
       });
   };
 

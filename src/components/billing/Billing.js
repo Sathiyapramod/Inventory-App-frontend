@@ -15,7 +15,6 @@ function Billing() {
 
   const handleChange = (event, page) => {
     setCurrentPage(page);
-    console.log(page);
     let startIndex = (page - 1) * 5;
     let endIndex = startIndex + 4;
     fetch(`${backendAPI}/billing`, {
@@ -25,7 +24,6 @@ function Billing() {
     })
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result.slice(startIndex, endIndex));
         setBills(result.slice(startIndex, endIndex));
       });
   };
@@ -39,7 +37,6 @@ function Billing() {
       .then((response) => response.json())
       .then((result) => {
         setBills(result);
-        console.log(result);
       });
   }, []);
   return (

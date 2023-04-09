@@ -31,7 +31,7 @@ function CreatePO() {
       rate,
       total,
     };
-    // console.log(newItem);
+
     setItemlist([...itemList, newItem]);
   };
 
@@ -47,7 +47,6 @@ function CreatePO() {
       gst,
       NetAmount,
     };
-    console.log(newOrder);
   };
   const newPurchaseOrder = () => {
     const newPO = {
@@ -61,20 +60,17 @@ function CreatePO() {
       isScrutinized: 0,
       isApproved: 0,
     };
-    console.log(newPO);
-    console.log(approver);
+
     let id = workflow.find((user) => {
       return user.empName == approver.toLowerCase();
     })._id;
-    console.log(id);
 
-    console.log(newPO);
     fetch(`${backendAPI}/workflow/${id}`, {
       method: "PUT",
       body: JSON.stringify(newPO),
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token")
+        "x-auth-token": localStorage.getItem("token"),
       },
     })
       .then((response) => response.json())
@@ -90,10 +86,10 @@ function CreatePO() {
       .then(() => alert("PO database Updated Successfully !!!"));
   };
   const getWorkflow = () => {
-    fetch(`${backendAPI}/workflow`,{
-      headers:{
-        "x-auth-token": localStorage.getItem("token")
-      }
+    fetch(`${backendAPI}/workflow`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
     })
       .then((response) => response.json())
       .then((result) => setworkflows(result));

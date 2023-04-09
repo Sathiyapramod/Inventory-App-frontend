@@ -92,7 +92,7 @@ function Payment() {
 }
 
 function Counter({ updatePaymentStatus, item }) {
-  // console.log(item);
+
   const [status, setStatus] = useState(false);
   return (
     <button
