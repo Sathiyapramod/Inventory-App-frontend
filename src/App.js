@@ -183,26 +183,27 @@ function Login({ setUsername, setPassword, newSignin }) {
   return (
     <div className="login mx-auto">
       <div className="d-flex flex-column justify-content-center align-items-center gap-2">
-        <div className="d-flex flex-row justify-content-center align-items-center gap-3">
-          <label className="form-label">User name</label>
-          <span className="col-5">
-            <input
-              type="text"
-              className="form-control me-2"
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </span>
+        <div className="col-6 form-floating">
+          <input
+            type="text"
+            className="form-control me-2"
+            onChange={(event) => setUsername(event.target.value)}
+            id="floatingUsername"
+          />
+          <label className="form-label" htmlFor="floatingUsername">
+            User name
+          </label>
         </div>
-        <div className="d-flex flex-row justify-content-center align-items-center gap-3">
-          <label className="form-label">Password</label>
-          <span className="col-5">
-            {" "}
-            <input
-              type="password"
-              className="form-control me-2"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </span>
+        <div className="col-6 form-floating">
+          <input
+            type="password"
+            className="form-control me-2"
+            onChange={(event) => setPassword(event.target.value)}
+            id="floatingPassword"
+          />
+          <label className="form-label" htmlFor="floatingPassword">
+            Password
+          </label>
         </div>
         <div className="d-flex flex-row justify-content-center align-items-center gap-3">
           <button
@@ -222,7 +223,8 @@ function Login({ setUsername, setPassword, newSignin }) {
             Register
           </button>
         </div>
-      </div> <br />
+      </div>{" "}
+      <br />
       <div className="card">
         <div className="card-body">
           For Demo Purpose , log in with username : 'steve', password : '789456'
