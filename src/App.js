@@ -222,6 +222,11 @@ function Login({ setUsername, setPassword, newSignin }) {
             Register
           </button>
         </div>
+      </div> <br />
+      <div className="card">
+        <div className="card-body">
+          For Demo Purpose , log in with username : 'steve', password : '789456'
+        </div>
       </div>
     </div>
   );

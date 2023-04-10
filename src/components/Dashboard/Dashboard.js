@@ -246,7 +246,7 @@ function Dashboard() {
                   <th>#</th>
                   <th>Customer Name</th>
                   <th>Contact No</th>
-                  <th>Email Address</th>
+                  <th>Address</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -258,7 +258,7 @@ function Dashboard() {
                         <td>{index + 1}</td>
                         <td>{customer.customerName}</td>
                         <td>{customer.contactNo}</td>
-                        <td>{customer.email}</td>
+                        <td>{customer.address}</td>
                         <td>
                           <button className="btn btn-outline-dark">View</button>
                         </td>
