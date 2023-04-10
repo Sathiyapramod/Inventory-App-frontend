@@ -121,7 +121,7 @@ function Billing() {
         </table>
       </div>
       <Pagination
-        count={2}
+        count={3}
         color="secondary"
         className="d-flex flex-row justify-content-center mx-auto"
         page={currentPage}

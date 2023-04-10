@@ -87,6 +87,7 @@ function CreateBill() {
       NetTotal,
       date: new Date(date).toLocaleDateString(),
     };
+    console.log(newBill);
     const data = await fetch(`${backendAPI}/billing`, {
       method: "POST",
       body: JSON.stringify(newBill),
