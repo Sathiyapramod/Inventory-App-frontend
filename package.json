@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "private": true,
+  "productName": "Electron App Example",
   "main": "public/main.js",
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -23,11 +23,15 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set BROWSER=none && react-scripts start",
+    "start-electron": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/main.js --publish never",
+    "publish": "electron-builder build --mac --win --publish always",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "electron ."
+    "electron": "electron .",
+    "build-electron": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +52,34 @@
     ]
   },
   "devDependencies": {
-    "electron": "^24.0.0"
+    "electron": "^24.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "build": {
+    "productName": "React Electron App",
+    "mac": {
+      "publish": {
+        "provider": "github",
+        "owner": "Sathiyapramod",
+        "repo": "capstone-inventory-backend",
+        "token": ""
+      }
+    },
+    "win": {
+      "publish": {
+        "provider": "github",
+        "owner": "Sathiyapramod",
+        "repo": "capstone-inventory-backend",
+        "token": ""
+      }
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "Sathiyapramod"
+    }
   }
 }

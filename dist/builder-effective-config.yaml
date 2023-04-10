@@ -1,0 +1,28 @@
+directories:
+  output: dist
+  buildResources: assets
+files:
+  - filter:
+      - build/**/*
+      - build/**/*
+      - node_modules/**/*
+extraMetadata:
+  main: build/main.js
+productName: React Electron App
+mac:
+  publish:
+    provider: github
+    owner: Sathiyapramod
+    repo: capstone-inventory-backend
+    token: <stripped sensitive data>
+win:
+  publish:
+    provider: github
+    owner: Sathiyapramod
+    repo: capstone-inventory-backend
+    token: <stripped sensitive data>
+publish:
+  provider: github
+  owner: Sathiyapramod
+extends: react-cra
+electronVersion: 24.0.0
