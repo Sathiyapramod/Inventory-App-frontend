@@ -11,7 +11,7 @@ function createWindow () {
   })
 
   //load the index.html from a url
-  win.loadURL('http://localhost:3000');
+  win.loadURL('https://capstone-final-sathiyapramod.netlify.app/');
 
   // Open the DevTools.
   win.webContents.openDevTools()
