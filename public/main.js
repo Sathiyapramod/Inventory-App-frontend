@@ -5,6 +5,7 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 1020,
     height: 900,
+    resizable : true,
     webPreferences: {
       nodeIntegration: true
     }
