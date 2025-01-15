@@ -1,13 +1,12 @@
-.printing-page{
+.printing-page {
     size: auto;
     size: A4;
     margin: 0mm;
     orientation: portrait;
 }
 
-
 @media print {
-    .hide-on-plot{
+    .hide-on-plot {
         display: none;
     }
 }

@@ -20,7 +20,7 @@ function Approvals() {
         setworkflows(
           result.find((user) => {
             return user.empName == localStorage.getItem("currentUser");
-          }).workflow
+          }).workflow,
         );
       });
   };
