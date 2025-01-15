@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import Api from "../../services/api";
 
 function Dashboard() {
   let roleID = localStorage.getItem("cadreID");
@@ -26,42 +27,42 @@ function Dashboard() {
   const [billedCustomers, setBilledcustomers] = useState([]);
   const [customers, setcustomers] = useState([]);
 
-  const getBillData = () => {
-    fetch(`${backendAPI}/users/billabstract`,{
-      headers:{
-        "Content-type":"application/json"
-      }
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setBilledcustomers(result);
-      });
+  const getBillData = async () => {
+    const { data, status } = await Api.getUserBillAbs();
+    if (status === 400) {
+      // introduce toaster
+    }
+    if (!data) {
+      // ignore
+    }
+    setBilledcustomers(data);
   };
 
-  const getCustomers = () => {
-    fetch(`${backendAPI}/customers`,{
-      headers:{
-        "x-auth-token": localStorage.getItem("token")
-      }
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setcustomers(result);
-      });
+  const getCustomers = async () => {
+    const { data, status } = await Api.getCustomers();
+    if (status === 400) {
+      // introduce toaster
+    }
+    if (!data) {
+      // ignore
+    }
+    setcustomers(data);
   };
-  const getInventory = () => {
-    fetch(`${backendAPI}/inventory`,{
-      headers:{
-        "x-auth-token":localStorage.getItem("token")
-      }
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setInventory(result);
-        let totalQty = 0,
-          currentQty = 0,
-          currentValue = 0,
-          bookedValue = 0;
+  const getInventory = async () => {
+    const { data, status } = await Api.getInventory();
+
+    if (status === 400 || status === 401) {
+      // introduce toaster
+    }
+    if (!data) {
+      // ignore
+    } else {
+      setInventory(data);
+      let totalQty = 0,
+        currentQty = 0,
+        currentValue = 0,
+        bookedValue = 0;
+      if (inventory.length > 0) {
         for (let items in inventory) {
           totalQty += Number(inventory[items].totalQty);
           currentQty += Number(inventory[items].billedQty);
@@ -74,28 +75,37 @@ function Dashboard() {
         setCurrentStock(currentQty);
         setCurrentValue(currentValue);
         setBooked(bookedValue);
-      });
+      }
+    }
   };
 
+  const getWorkflow = async () => {
+    try {
+      const res = await fetch(`${backendAPI}/workflow`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
+      const data = await res.data;
+
+      if (!data) {
+        // ignore
+      }
+      setworkflows(
+        data.filter((user) => {
+          return user.empName === localStorage.getItem("currentUser");
+        })[0].workflow.length,
+      );
+    } catch (err) {
+      return err.response;
+    }
+  };
   useEffect(() => {
     getInventory();
     getBillData();
     getCustomers();
-    fetch(`${backendAPI}/workflow`,{
-      headers:{
-        "x-auth-token": localStorage.getItem("token")
-      }
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setworkflows(
-          result.filter((user) => {
-            return user.empName == localStorage.getItem("currentUser");
-          })[0].workflow.length
-        );
-      });
+    getWorkflow();
   }, [workflow]);
-
 
   return (
     <div>
@@ -181,7 +191,7 @@ function Dashboard() {
         </div>
       </div>
       <br />
-      <div className="d-flex flex-row justify-content-center align-items-center flex-wrap gap-5 mx-auto">
+      <div className="d-flex flex-row justify-content-center align-items-center flex-wrap gap-5 mx-auto flex-lg-wrap">
         <div className="card rounded-2" style={{ width: "45%" }}>
           <span className="fs-5 fw-bold card-header bg-light text-start">
             <CorporateFareRoundedIcon /> Customer Data
@@ -251,7 +261,7 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {customers &&
+                {customers.length > 0 &&
                   customers.map((customer, index) => {
                     return (
                       <tr key={index}>
